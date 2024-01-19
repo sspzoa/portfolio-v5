@@ -3,7 +3,7 @@ import styles from '@/components/projects/projects.module.css';
 import Link from "next/link";
 
 export async function fetchProjects() {
-    const res = await fetch('https://sspzoa.io/api/projects');
+    const res = await fetch('/api/projects');
     return await res.json();
 }
 
