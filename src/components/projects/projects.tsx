@@ -3,16 +3,19 @@ import styles from '@/components/projects/projects.module.css';
 import Link from "next/link";
 
 export async function fetchProjects() {
-    const { Client } = require('@notionhq/client');
 
-    const notionApiKey = process.env.NOTION_API_KEY;
-    const databaseId = process.env.NOTION_DATABASE_ID;
+    const res = await fetch(`https://api.notion.com/v1/databases/${process.env.NOTION_DATABASE_ID}/query`, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            Accept: 'application/json',
+            'Notion-Version': '2022-02-22',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.NOTION_API_KEY}`
+        },
+    })
 
-    const notion = new Client({ auth: notionApiKey });
-
-    return await notion.databases.query({
-        database_id: databaseId,
-    });
+    return await res.json()
 }
 
 export default function Projects() {
