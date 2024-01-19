@@ -13,8 +13,7 @@ export default function Intro() {
                         learning native Android with Jetpack Compose.
                     </p>
                 </div>
-                <Image className={styles.logo} src={'/images/sspzoa_logo.svg'} alt={'sspzoa'} width={240}
-                       height={240}></Image>
+                <Image className={styles.logo} src={'/images/sspzoa_logo.svg'} alt={'sspzoa'} width={240} height={240} />
             </div>
         </div>
     );

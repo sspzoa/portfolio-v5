@@ -33,3 +33,29 @@
     box-shadow: 5em -5em 10em #6D87A8;
     margin-right: 3em;
 }
+
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 4em;
+        padding: 0 1em;
+    }
+
+    .description {
+        gap: 1em;
+    }
+
+    .description h1 {
+        font-size: 2em;
+        font-weight: 800;
+    }
+
+    .logo {
+        align-self: flex-end;
+        margin-right: 0;
+        width: 12em;
+        height: 12em;
+    }
+}

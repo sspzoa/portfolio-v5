@@ -33,3 +33,14 @@
     font-size: 2em;
     color: var(--grayscale-600);
 }
+
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column-reverse;
+        gap: 1em;
+    }
+
+    .links {
+        justify-content: center;
+    }
+}
