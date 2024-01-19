@@ -1,70 +1,63 @@
-'use client'
-
-import React, {useEffect, useState} from 'react';
+import {Key, use} from 'react';
 import styles from '@/components/projects/projects.module.css';
-import {Client} from '@notionhq/client';
-import dotenv from 'dotenv';
-import {PageObjectResponse} from "@notionhq/client/build/src/api-endpoints";
+import Link from "next/link";
 
-interface Project {
-    id: string;
-    title: string;
+export async function fetchProjects() {
+    const res = await fetch('https://sspzoa.io/api/projects');
+    return await res.json();
 }
 
 export default function Projects() {
-    dotenv.config();
-    const [projects, setProjects] = useState<Project[]>([]); // Use the Project interface
-
-    const notion = new Client({
-        auth: process.env.NOTION_API_KEY,
-    });
-
-    async function getDatabaseData(databaseId: string) {
-        const response = await notion.databases.query({database_id: databaseId});
-
-        function isPageObjectResponse(page: any): page is PageObjectResponse {
-            return page.object === 'page' && page.properties != null;
-        }
-
-        const projects = response.results
-            .filter(isPageObjectResponse) // Use the type guard here
-            .map((page) => {
-                const titleProperty = page.properties['YourTitlePropertyName'];
-
-                const title = titleProperty && titleProperty.type === 'rich_text' && titleProperty.rich_text.length > 0
-                    ? titleProperty.rich_text[0].plain_text
-                    : 'Unnamed Project';
-
-                return {
-                    id: page.id,
-                    title: title,
-                };
-            });
-
-        return projects;
-    }
-
-    async function fetchProjects() {
-        const databaseId = 'fbfc345880a84d3e9d16d9698809689d';
-        const data = await getDatabaseData(databaseId);
-        console.log('데이터베이스 데이터:', data);
-        setProjects(data);
-    }
-
-    useEffect(() => {
-        fetchProjects();
-    }, []);
+    const data = use(fetchProjects());
 
     return (
-        <div className={styles.container}>
-            <h1>Projects</h1>
-            <ul>
-                {projects.map(project => (
-                    <li key={project.id}>
-                        {project.title || 'Unnamed Project'}
-                    </li>
+        <div id='projects' className={styles.container}>
+            <div className={styles.content}>
+                {data.results.map((project: {
+                    id: Key | null | undefined;
+                    cover: { file: { url: string; }; };
+                    properties: {
+                        Name: {
+                            title: {
+                                plain_text: string;
+                            }[];
+                        };
+                        Description: {
+                            rich_text: {
+                                plain_text: string;
+                            }[];
+                        };
+                        Tags: { multi_select: { name: any; }[]; };
+                        WorkPeriod: { date: { start: any; end: any; }; };
+                        GitHub: { url: string; };
+                        Contributor: {
+                            number: number;
+                        };
+                    };
+                }) => (
+                    <div className={styles.project} key={project.id}>
+                        <img src={`${project.cover.file.url}`} alt={`${project.properties.Name.title[0]?.plain_text}`}/>
+                        <div className={styles.texts}>
+                            <div className={styles.header}>
+                                <h3>{project.properties.Name.title[0]?.plain_text}</h3>
+                                <p>{project.properties.Contributor?.number}인 프로젝트</p>
+                            </div>
+                            <p>{project.properties.Description.rich_text[0]?.plain_text}
+                            </p>
+                            <div className={styles.tags}>
+                                {
+                                    project.properties.Tags.multi_select.map((tag: { name: any; }) => (
+                                        <div className={styles.tag} key={tag.name}>{tag.name}</div>
+                                    ))
+                                }
+                            </div>
+                            <p>{project.properties.WorkPeriod.date.end ? `${project.properties.WorkPeriod.date.start} to ${project.properties.WorkPeriod.date.end}` : `${project.properties.WorkPeriod.date.start}`}</p>
+                            <Link href={project.properties.GitHub.url}
+                                  target={'_blank'}>{project.properties.GitHub.url}</Link>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }
