@@ -3,8 +3,16 @@ import styles from '@/components/projects/projects.module.css';
 import Link from "next/link";
 
 export async function fetchProjects() {
-    const res = await fetch('https://sspzoa.io/api/projects');
-    return await res.json();
+    const { Client } = require('@notionhq/client');
+
+    const notionApiKey = process.env.NOTION_API_KEY;
+    const databaseId = process.env.NOTION_DATABASE_ID;
+
+    const notion = new Client({ auth: notionApiKey });
+
+    return await notion.databases.query({
+        database_id: databaseId,
+    });
 }
 
 export default function Projects() {
