@@ -40,7 +40,7 @@
         gap: 1em;
     }
 
-    .links {
-        justify-content: center;
+    .content h3 {
+        font-size: 1em;
     }
 }
