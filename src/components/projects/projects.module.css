@@ -29,12 +29,48 @@
     border-radius: 1em;
 }
 
+.imageContainer {
+    width: 100%;
+    position: relative;
+}
+
 .project img {
     width: 100%;
     height: 12em;
     object-fit: cover;
     border-radius: 1em 1em 0 0;
     border-bottom: 1px solid var(--grayscale-300);
+    transition: filter 0.5s ease-in-out;
+}
+
+.imageContainer:hover .image {
+    filter: blur(2px) brightness(0.8);
+}
+
+
+.imageContainer:hover .viewDetails {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.image {
+    transition: filter 0.3s;
+}
+
+.viewDetails {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--grayscale-100);
+    opacity: 0;
+
+    transition: opacity 0.5s ease-in-out;
+}
+
+.imageContainer:hover .viewDetails {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
 }
 
 .project a {

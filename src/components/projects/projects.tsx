@@ -45,13 +45,20 @@ export default function Projects() {
                             number: number;
                         };
                     };
+                    public_url: string;
                 }) => (
                     <div className={styles.project} key={project.id}>
-                        <img src={`${project.cover.file.url}`} alt={`${project.properties.Name.title[0]?.plain_text}`}/>
+                        <div className={styles.imageContainer}>
+                            <Link target={'_blank'} href={project.public_url}>
+                                <img className={styles.image} src={`${project.cover.file.url}`}
+                                     alt={`${project.properties.Name.title[0]?.plain_text}`}/>
+                                <p className={styles.viewDetails}>자세히 보기</p>
+                            </Link>
+                        </div>
                         <div className={styles.texts}>
                             <div className={styles.header}>
-                                <h3>{project.properties.Name.title[0]?.plain_text}</h3>
-                                <p>{project.properties.Contributor?.number}인 프로젝트</p>
+                                <h3>{project.properties.Name.title[0].plain_text}</h3>
+                                <p>{project.properties.Contributor.number}인 프로젝트</p>
                             </div>
                             <p>{project.properties.Description.rich_text[0]?.plain_text}
                             </p>
