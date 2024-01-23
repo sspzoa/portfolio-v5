@@ -13,7 +13,7 @@
     justify-items: center;
     align-items: center;
     gap: 2em;
-    background-color: var(--grayscale-100);
+    background-color: #FDFEFE;
     border: 1px solid var(--grayscale-300);
     border-radius: 1em;
     padding: 2em;

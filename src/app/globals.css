@@ -34,6 +34,23 @@ a {
     --primary-brand: #6D87A8;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --grayscale-100: #1C1F1F;
+        --grayscale-200: #333738;
+        --grayscale-300: #4B5152;
+        --grayscale-400: #626A6B;
+        --grayscale-500: #808989;
+        --grayscale-600: #B4B9B9;
+        --grayscale-700: #DADDDD;
+        --grayscale-800: #EAEBEB;
+        --grayscale-900: #F4F5F5;
+        --grayscale-1000: #FDFEFE;
+        --primary-brand: #6D87A8;
+    }
+
+}
+
 @font-face {
     font-family: 'SUITv1';
     font-weight: 100;
