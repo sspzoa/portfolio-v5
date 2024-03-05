@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function About() {
     return (
         <div id='about' className={styles.container}>
-            <Image src={'/images/profile.jpg'} alt={'profile'} width={240} height={240}
+            <Image src={'/images/profile.jpeg'} alt={'profile'} width={240} height={240}
                    style={{objectFit: "cover"}}/>
             <div className={styles.content}>
                 <div className={styles.career}>
